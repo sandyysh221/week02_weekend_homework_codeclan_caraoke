@@ -10,5 +10,9 @@ class TestGuest(unittest.TestCase):
     def test_guest_has_name(self):
         self.assertEqual("Sandy", self.guest.name)
 
-    def test_guest_has_age(self):
-        self.assertEqual(30, self.guest.age)
+    def test_guest_has_cash(self):
+        self.assertEqual(30, self.guest.wallet)
+
+    def test_remove_cash(self):
+        self.guest.remove_cash(5)
+        self.assertEqual(25, self.guest.wallet)
