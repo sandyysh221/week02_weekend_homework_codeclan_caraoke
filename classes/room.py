@@ -1,13 +1,18 @@
 class Room:
-    def __init__(self, name, entry_fee):
+    def __init__(self, name, entry_fee, max_capacity):
         self.name = name
         self.entry_fee = entry_fee
         self.till = 0
+        self.max_capacity = max_capacity
         self.customer = []
         self.song = []
+        self.queue = []
 
     def cst_checks_in(self, customer, room):
-        self.customer.append(customer)
+        if len(self.customer) < self.max_capacity:
+            self.customer.append(customer)
+        else:
+            self.queue.append(customer)
 
     def cst_checks_out(self, customer, room):
         self.customer.remove(customer)

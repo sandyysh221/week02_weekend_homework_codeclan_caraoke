@@ -6,8 +6,8 @@ from classes.song import Song
 
 class TestRoom(unittest.TestCase):
     def setUp(self):
-        self.room1 = Room("Treble in Paradise", 5)
-        self.room2 = Room("Songs of Pitch", 10)
+        self.room1 = Room("Treble in Paradise", 5, 2)
+        self.room2 = Room("Songs of Pitch", 10, 4)
         self.customer1 = Guest("Sandy", 30)
         self.customer2 = Guest("Chris", 40)
         self.customer3 = Guest("Simon", 20)
@@ -62,3 +62,9 @@ class TestRoom(unittest.TestCase):
         self.customer1.remove_cash(self.room1.entry_fee)
         self.assertEqual(5, self.room1.till)
         self.assertEqual(25, self.customer1.wallet)
+
+    def test_room_has_queue(self):
+        self.room1.cst_checks_in(self.customer1, self.room1)
+        self.room1.cst_checks_in(self.customer2, self.room1)
+        self.room1.cst_checks_in(self.customer3, self.room1)
+        self.assertEqual(1, len(self.room1.queue))
