@@ -8,9 +8,9 @@ class TestRoom(unittest.TestCase):
     def setUp(self):
         self.room1 = Room("Treble in Paradise", 5, 2)
         self.room2 = Room("Songs of Pitch", 10, 4)
-        self.customer1 = Guest("Sandy", 30)
-        self.customer2 = Guest("Chris", 40)
-        self.customer3 = Guest("Simon", 20)
+        self.customer1 = Guest("Sandy", 30, "Reflection")
+        self.customer2 = Guest("Chris", 40, "A Whole New World")
+        self.customer3 = Guest("Simon", 20, "We Don't Talk About Bruno")
 
     def test_room_has_name(self):
         self.assertEqual("Treble in Paradise", self.room1.name)
@@ -25,7 +25,6 @@ class TestRoom(unittest.TestCase):
         self.assertEqual(2, self.room1.cst_in_room_count())
 
     def test_guests_checks_out(self):
-
         self.room2.cst_checks_in(self.customer1, self.room2)
         self.room2.cst_checks_in(self.customer2, self.room2)
         self.room2.cst_checks_in(self.customer3, self.room2)
@@ -47,8 +46,8 @@ class TestRoom(unittest.TestCase):
         self.room1.add_song(song1)
         self.room1.add_song(song2)
         self.room2.add_song(song3)
-        self.assertEqual(2, self.room1.song_count())
-        self.assertEqual(1, self.room2.song_count())
+        self.assertEqual(4, self.room1.song_count())
+        self.assertEqual(3, self.room2.song_count())
 
     def test_room_has_fee(self):
         self.assertEqual(5, self.room1.entry_fee)
@@ -68,3 +67,8 @@ class TestRoom(unittest.TestCase):
         self.room1.cst_checks_in(self.customer2, self.room1)
         self.room1.cst_checks_in(self.customer3, self.room1)
         self.assertEqual(1, len(self.room1.queue))
+
+    def test_cst_fave_song_is_playing(self):
+        self.room1.cst_checks_in(self.customer1, self.room1)
+        self.room1.add_song(self.customer1.fave_song)
+        self.assertEqual("Woohoo!", self.room1.play_fave_song(self.customer1))
